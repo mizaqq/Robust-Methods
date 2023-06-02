@@ -2,7 +2,7 @@
 import cv2
 import numpy as np
 # Load image in grayscale
-img = cv2.imread('circle.jpg', cv2.IMREAD_GRAYSCALE)
+img = cv2.imread('circle3.jpg', cv2.IMREAD_GRAYSCALE)
 
 # Define Sobel kernels
 Gx = np.array([[-1, 0, 1], [-2, 0, 2], [-1, 0, 1]])
@@ -36,17 +36,26 @@ angle = np.arctan2(edge_y, edge_x) * 180 / np.pi
 #cv2.imshow('mag',mag)
 #cv2.imshow('angle',angle)
 #cv2.waitKey(0)
-
+min_radius=150
+max_radius=255
 x_range = (0, img.shape[1])  # Range of x coordinates
 y_range = (0, img.shape[0])  # Range of y coordinates
-r_range = (500, 800)  # Range of radii
+r_range = (min_radius,max_radius)  # Range of radii
 # Set the resolution for each parameter
 x_resolution = 1
 y_resolution = 1
 r_resolution = 1
 # Calculate the dimensions of the accumulator array
-x_dim = int((x_range[1] - x_range[0]) / x_resolution) + 1
-y_dim = int((y_range[1] - y_range[0]) / y_resolution) + 1
-r_dim = int((r_range[1] - r_range[0]) / r_resolution) + 1
+x_dim = int((x_range[1] - x_range[0]) / x_resolution) + 2
+y_dim = int((y_range[1] - y_range[0]) / y_resolution) + 2
+r_dim = int((r_range[1] - r_range[0]) / r_resolution) + 2
 
 accumulator = np.zeros((x_dim, y_dim, r_dim), dtype=np.uint64)
+
+edge_pixels = np.nonzero(mag)  # Get indices of edge pixels
+y_values, x_values = edge_pixels[0], edge_pixels[1]
+
+
+
+
+print('done')
